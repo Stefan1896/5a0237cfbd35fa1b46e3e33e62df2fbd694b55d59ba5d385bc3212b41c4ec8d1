@@ -1,0 +1,17 @@
+#install.packages(c("httr","jsonlite", "writexl"))
+library(httr) # we need to use the GET() function from the httr library. The GET() function requires a URL, which specifies the address of the server that the request needs to be sent to.
+library(jsonlite) #used to convert raw Unicode into a character vector that resembles the JSON format and to further convert it into list data structure
+library(writexl) #used to export excel document
+
+
+# make get request to connect to api
+res = GET("https://api.sec-api.io/compensation/1018724?token=5a0237cfbd35fa1b46e3e33e62df2fbd694b55d59ba5d385bc3212b41c4ec8d1")
+res
+
+# convert result to a dataframe
+rawToChar(res$content)
+data = fromJSON(rawToChar(res$content))
+amazon_comp <- as.data.frame(data)
+
+# export result as excel document
+write_xlsx(amazon_comp,"C:\\Users\\STEFA691/Desktop/AmazonComp.xlsx")
